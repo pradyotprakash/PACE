@@ -1,3 +1,7 @@
+<?php session_start(); ?>
+<?php
+if($_SERVER['PHP_AUTH_USER'] == "pp" and $_SERVER['PHP_AUTH_PW'] == "pp"){
+?>
 <!DOCTYPE html>
 <head>
 <link rel="stylesheet" type="text/css" href="bootstrap.css">
@@ -8,10 +12,13 @@
 	<div id="cssmenu" style="z-index:1;">
 	<ul>
    	<li class>
-   		<a href="updateDbFields.html"<span>add questions</span></a>
+   		<a href="updateDbFields.php"<span>add questions</span></a>
+   	</li>
+   	<li>
+   		<a href='getQuestions.php'><span>access questions</span></a>
    	</li>
    	<li class='last'>
-   		<a href='getQuestions.php'><span>access questions</span></a>
+   		<a href='logout.php'><span>logout</span></a>
    	</li>
 	</ul>
 	</div>
@@ -36,7 +43,10 @@
 		}
 	</script>
 	<div class="well">
-	<p>
+	<div style="border-left:50px #FFFFFF;padding:50px;padding-bottom:0px;">
+	<h3>Well here are the questions :</h3>
+	<hr>
+	<div class="list-group">
 	<?php
 		$type = array('single','multiple','integer');
 		$difficulty = array('easy','medium','hard');
@@ -54,12 +64,26 @@
 			$db = "SELECT Question,Answer FROM AITS WHERE (".$export;
 			$answer = mysqli_query($con,$db);
 			while($fetch = mysqli_fetch_array($answer)){
-				echo $fetch[0]."<br>".$fetch[1]."<br><br>";
+				echo '<a class="list-group-item">';
+		        echo '<h4 class="list-group-item-heading">'.$fetch[0].'</h4>';
+		        echo '<p class="list-group-item-text">'.$fetch[1].'</p>';
+			    echo '</a>';
 			}}}
 		}
 	?>
-	</p>
+	</div>
 	</div>
 	</div>
 </body>
 </html>
+<?php
+}
+else 
+{
+	header("WWW-Authenticate: " .
+		"Basic realm=\"PHPEveryday's Protected Area\"");
+	header("HTTP/1.0 401 Unauthorized");//1.0 200 OK
+	print("This page is protected by HTTP ");
+	session_destroy();
+}
+?>

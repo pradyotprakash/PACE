@@ -1,3 +1,7 @@
+<?php session_start(); ?>
+<?php
+if($_SERVER['PHP_AUTH_USER'] == "pp" and $_SERVER['PHP_AUTH_PW'] == "pp"){
+?>
 <!DOCTYPE html>
 <head>
 <link rel="stylesheet" type="text/css" href="bootstrap.css">
@@ -22,11 +26,14 @@ table td{
 	<div>
 	<div id="cssmenu" style="z-index:1;">
 	<ul>
-   	<li class>
-   		<a href="updateDbFields.html"<span>add questions</span></a>
+   	<li>
+   		<a href="updateDbFields.php"<span>add questions</span></a>
    	</li>
-   	<li class='last active'>
+   	<li class='active'>
    		<a href='getQuestions.php'><span>access questions</span></a>
+   	</li>
+   	<li class='last'>
+   		<a href='logout.php'><span>logout</span></a>
    	</li>
 	</ul>
 	</div>
@@ -143,3 +150,14 @@ table td{
 	</div>
 </body>
 </html>
+<?php
+}
+else 
+{
+	header("WWW-Authenticate: " .
+		"Basic realm=\"PHPEveryday's Protected Area\"");
+	header("HTTP/1.0 401 Unauthorized");//1.0 200 OK
+	print("This page is protected by HTTP ");
+	session_destroy();
+}
+?>
