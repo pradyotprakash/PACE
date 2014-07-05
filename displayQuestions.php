@@ -1,6 +1,11 @@
 <?php session_start(); ?>
 <?php
-if($_SERVER['PHP_AUTH_USER'] == "pp" and $_SERVER['PHP_AUTH_PW'] == "pp"){
+$id = $_SERVER['PHP_AUTH_USER'];
+$pass = sha1($_SERVER['PHP_AUTH_PW']);
+$con = mysqli_connect($_SERVER['SERVER_ADDR'],'root','','PACE');
+$db = "SELECT COUNT(*) FROM Authenticate WHERE Id='$id' AND Pass='$pass'";
+$flag = mysqli_fetch_array(mysqli_query($con,$db))[0];
+if($_SESSION['isset'] == true and $flag){
 ?>
 <!DOCTYPE html>
 <head>
@@ -53,6 +58,7 @@ if($_SERVER['PHP_AUTH_USER'] == "pp" and $_SERVER['PHP_AUTH_PW'] == "pp"){
 		$con = mysqli_connect($_SERVER['SERVER_ADDR'],'root','','PACE');
 		$db = "SELECT * FROM PhysicsTopics";
 		$res = mysqli_query($con,$db);
+		$file = fopen('QuestionPaper.txt','w');
 		while($row = mysqli_fetch_array($res)){
 			$topic = $row['Topics'];
 			$quantity=array();
@@ -68,6 +74,7 @@ if($_SERVER['PHP_AUTH_USER'] == "pp" and $_SERVER['PHP_AUTH_PW'] == "pp"){
 		        echo '<h4 class="list-group-item-heading">'.$fetch[0].'</h4>';
 		        echo '<p class="list-group-item-text">'.$fetch[1].'</p>';
 			    echo '</a>';
+			    fwrite($file,$fetch[0]."\n".$fetch[1]."\n");
 			}}}
 		}
 	?>
@@ -81,9 +88,9 @@ if($_SERVER['PHP_AUTH_USER'] == "pp" and $_SERVER['PHP_AUTH_PW'] == "pp"){
 else 
 {
 	header("WWW-Authenticate: " .
-		"Basic realm=\"PHPEveryday's Protected Area\"");
+		"Basic realm=\"Please Authenticate\"");
 	header("HTTP/1.0 401 Unauthorized");//1.0 200 OK
-	print("This page is protected by HTTP ");
-	session_destroy();
+	print("Unauthorized access not allowed");
+	$_SESSION['isset']=true;
 }
 ?>

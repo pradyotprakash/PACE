@@ -1,6 +1,11 @@
 <?php session_start(); ?>
 <?php
-if($_SERVER['PHP_AUTH_USER'] == "pp" and $_SERVER['PHP_AUTH_PW'] == "pp") {
+$id = $_SERVER['PHP_AUTH_USER'];
+$pass = sha1($_SERVER['PHP_AUTH_PW']);
+$con = mysqli_connect($_SERVER['SERVER_ADDR'],'root','','PACE');
+$db = "SELECT COUNT(*) FROM Authenticate WHERE Id='$id' AND Pass='$pass'";
+$flag = mysqli_fetch_array(mysqli_query($con,$db))[0];
+if($_SESSION['isset'] == true and $flag) {
 ?>
 <!DOCTYPE html>
 <head>
@@ -50,8 +55,8 @@ if($_SERVER['PHP_AUTH_USER'] == "pp" and $_SERVER['PHP_AUTH_PW'] == "pp") {
 </body>
 </html>
 <?php
-$_SERVER['PHP_AUTH_USER']='';
-$_SERVER['PHP_AUTH_PW']='';
+$_SESSION['isset']=false;
+session_destroy();
 }
 else {
 ?>
