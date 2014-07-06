@@ -1,8 +1,48 @@
 <!DOCTYPE html>
 <head>
+<link rel="stylesheet" type="text/css" href="bootstrap.css">
+<link rel="stylesheet" type="text/css" href="mystyle.css">
 <title>Add Questions</title>
 </head>
-<body background="background.jpg">
+<body background="">
+
+	<div id="cssmenu" style="z-index:1;">
+	<ul>
+   	<li>
+   		<a href="updateDbFields.php"<span>add questions</span></a>
+   	</li>
+   	<li>
+   		<a href='getQuestions.php'><span>access questions</span></a>
+   	</li>
+   	<li>
+   		<a href='logout.php'><span>logout</span></a>
+   	</li>
+   	<li class='last'>
+   		<a href='changePassword.php'><span>change password</span></a>
+   	</li>
+	</ul>
+	</div>
+	<br><br>
+	<div class="col-sm-10" style="width:16%;margin-left:45%;"><br>
+		<div class="form-control">
+		<p id="time"></p>
+		</div>
+	</div>
+	<br>
+	<br>
+	<script>
+		var x = setInterval(function(){func()},1000);
+		function func()
+		{
+			document.getElementById("time").style.color="black";
+			var d=new Date();
+			var t=d.toLocaleDateString()+" || "+d.toLocaleTimeString();
+			document.getElementById("time").innerHTML=t;
+		}
+	</script>
+	<div class="well">
+	<div style="border-left:50px #FFFFFF;padding:50px;padding-bottom:0px;">
+	
 <?php
 if($_SERVER['REQUEST_METHOD']=='POST'){
 	
@@ -16,7 +56,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	$con = mysqli_connect($_SERVER['SERVER_ADDR'],'root','','PACE');
 	if(!$con){
 ?>
-	<p style="margin-top:20%;margin-left:43%">Sorry! There is some problem connecting to the database. Administrator has been informed.</p><br>
+	<h3>Sorry! There is some problem connecting to the database. Administrator has been informed.</h3><br>
 <?php
 		mail();
 		die();
@@ -40,12 +80,12 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 		('$subject','$difficulty','$questionType','$topic','$question','$solution','$detailedSolution')";
 	if(mysqli_query($con,$db)){
 ?>
-	<p style="margin-top:20%;margin-left:43%">Database successfully updated!</p><br>
+	<h3>Database successfully updated!</h3><br>
 <?php
 	}
 	else {
 ?>
-	<p style="margin-top:20%;margin-left:43%">There is some problem updating the database. Please try again!</p><br>.
+	<h3>There is some problem updating the database. Please try again!</h3><br>.
 <?php
 		die();
 	}
@@ -53,7 +93,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 }
 ?>
 <br>
-<span id="para" style="margin-top:20%;margin-left:43%">Redirecting to previous page in 5 . . .</span>
+<h3 id="para">Redirecting to previous page in 5 . . .</h3>
 <script>
 	count = 4;
 	function decrement() {
@@ -66,5 +106,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	window.setTimeout(function(){redirect()},5000);
 	window.setInterval(function(){decrement()},1000);
 </script>
+</div>
+</div>
 </body
 </html>
