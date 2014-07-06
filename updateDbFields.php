@@ -14,7 +14,7 @@ if($_SESSION['isset'] == true and $flag){
 <title>Add Questions</title>
 </head>
 <body background="">
-	<div>
+	
 	<div id="cssmenu" style="z-index:1;">
 	<ul>
    	<li class='active'>
@@ -23,8 +23,11 @@ if($_SESSION['isset'] == true and $flag){
    	<li>
    		<a href='getQuestions.php'><span>access questions</span></a>
    	</li>
-   	<li class='last'>
+   	<li>
    		<a href='logout.php'><span>logout</span></a>
+   	</li>
+   	<li class='last'>
+   		<a href='changePassword.php'><span>change password</span></a>
    	</li>
 	</ul>
 	</div>
@@ -118,7 +121,7 @@ if($_SESSION['isset'] == true and $flag){
 	  </div>
 	</form>
 	</div>
-	</div>
+	
 </body>
 </html>
 <?php
@@ -128,7 +131,61 @@ else
 	header("WWW-Authenticate: " .
 		"Basic realm=\"Please Authenticate\"");
 	header("HTTP/1.0 401 Unauthorized");//1.0 200 OK
-	print("Unauthorized access not allowed");
 	$_SESSION['isset']=true;
+?>
+<!DOCTYPE html>
+<head>
+<link rel="stylesheet" type="text/css" href="bootstrap.css">
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+<title>Please login</title>
+</head>
+<body background="">
+  <div>
+  <div id="cssmenu" style="z-index:1;">
+  <ul>
+    <li>
+      <a href="updateDbFields.php"<span>add questions</span></a>
+    </li>
+    <li>
+      <a href='getQuestions.php'><span>access questions</span></a>
+    </li>
+    <li>
+      <a href='logout.php'><span>logout</span></a>
+    </li>
+    <li class='last'>
+      <a href='changePassword.php'><span>change password</span></a>
+    </li>
+  </ul>
+  </div>
+
+
+  <br><br>
+  <div class="col-sm-10" style="width:16%;margin-left:45%;"><br>
+    <div class="form-control">
+    <p id="time"></p>
+    </div>
+  </div>
+  <br>
+  <br>
+  <script>
+    var x = setInterval(function(){func()},1000);
+    function func()
+    {
+      document.getElementById("time").style.color="black";
+      var d=new Date();
+      var t=d.toLocaleDateString()+" || "+d.toLocaleTimeString();
+      document.getElementById("time").innerHTML=t;
+    }
+  </script>
+  <div class="well">
+  <div style="border-left:50px #FFFFFF;padding:50px;padding-bottom:0px;">
+  <h3>Login to see the portal.</h3>
+  
+  </div>
+  </div>
+</body>
+</html>
+<?php
 }
+mysqli_close($con);
 ?>

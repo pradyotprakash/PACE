@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-
+<title>Add Questions</title>
 </head>
 <body background="background.jpg">
 <?php
@@ -9,10 +9,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	$subject =  $_POST['inputSubject'];
 	$difficulty = $_POST['inputDifficulty'];
 	$questionType = $_POST['questionType'];
-	$topic = $_POST['inputTopic'];
-	$question = $_POST['inputQuestion'];
-	$solution = $_POST['inputSolution'];
-	$detailedSolution = $_POST['inputDetailedSolution'];
+	$topic = ($_POST['inputTopic']);
+	$question = htmlspecialchars($_POST['inputQuestion']);
+	$solution = htmlspecialchars($_POST['inputSolution']);
+	$detailedSolution = htmlspecialchars($_POST['inputDetailedSolution']);
 	$con = mysqli_connect($_SERVER['SERVER_ADDR'],'root','','PACE');
 	if(!$con){
 ?>
@@ -21,6 +21,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 		mail();
 		die();
 	}
+	$topic = mysqli_real_escape_string($con,$topic);
 	switch($subject){
 		case 'physics':
 			$db = "INSERT INTO PhysicsTopics Values ('$topic');";
@@ -48,6 +49,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 <?php
 		die();
 	}
+	mysqli_close($con);
 }
 ?>
 <br>
@@ -59,7 +61,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	count--;
 	}
 	function redirect() {
-	window.location.assign("updateDbFields.html");
+	window.location.assign("updateDbFields.php");
 	}
 	window.setTimeout(function(){redirect()},5000);
 	window.setInterval(function(){decrement()},1000);

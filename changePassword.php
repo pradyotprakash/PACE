@@ -11,12 +11,25 @@ if($_SESSION['isset'] == true and $flag){
 <head>
 <link rel="stylesheet" type="text/css" href="bootstrap.css">
 <link rel="stylesheet" type="text/css" href="mystyle.css">
+<link rel="stylesheet" type="text/css" href="passstyle.css">
+<title>Change Password</title>
+<script>
+function verify(){
+  var a = document.getElementsByName('newpass')[0].value;
+  var b = document.getElementsByName('newpassconf')[0].value;
+  if(a!=b){
+    alert("The new passwords do not match!");
+    return false;
+  }
+  return true;
+}
+</script>
 </head>
 <body background="">
-	
+	<div>
 	<div id="cssmenu" style="z-index:1;">
 	<ul>
-   	<li class>
+   	<li>
    		<a href="updateDbFields.php"<span>add questions</span></a>
    	</li>
    	<li>
@@ -25,8 +38,8 @@ if($_SESSION['isset'] == true and $flag){
    	<li>
    		<a href='logout.php'><span>logout</span></a>
    	</li>
-   	<li class='last'>
-   		<a href='changePassword.php'><span>change password</span></a>
+   	<li class='last active'>
+   		<a href='changePassword.php'><span>Change password</span></a>
    	</li>
 	</ul>
 	</div>
@@ -35,7 +48,7 @@ if($_SESSION['isset'] == true and $flag){
 	<br><br>
 	<div class="col-sm-10" style="width:16%;margin-left:45%;"><br>
 		<div class="form-control">
-		<p id="time"></p>
+		<p id="time" style="color:white;">PACE</p>
 		</div>
 	</div>
 	<br>
@@ -51,41 +64,32 @@ if($_SESSION['isset'] == true and $flag){
 		}
 	</script>
 	<div class="well">
-	<div style="border-left:50px #FFFFFF;padding:50px;padding-bottom:0px;">
-	<h3>Well here are the questions :</h3>
-	<hr>
-	<div class="list-group">
-	<?php
-		$type = array('single','multiple','integer');
-		$difficulty = array('easy','medium','hard');
-		$con = mysqli_connect($_SERVER['SERVER_ADDR'],'root','','PACE');
-		$subject = array('Physics','Chemistry','Maths');
-		foreach ($subject as $value) {
-		$db = "SELECT * FROM ".$value."Topics";
-		$res = mysqli_query($con,$db);
-		$file = fopen('QuestionPaper.txt','w');
-		while($row = mysqli_fetch_array($res)){
-			$topic = $row['Topics'];
-			$quantity=array(0,0,0,0,0,0,0,0,0);
-			for($i=0;$i<9;++$i)
-				$quantity[$i] = mysqli_real_escape_string($con,$_POST[$i.$topic]);
-			for($i=0;$i<3;++$i){
-				for($j=0;$j<3;++$j){
-					$export = "Topic=\"".$topic."\" AND QuestionType=\"".$type[$i]."\" AND Difficulty=\"".$difficulty[$j]."\") ORDER BY RAND() LIMIT ".$quantity[$i*3+$j].";";
-			$db = "SELECT Question,Answer FROM AITS WHERE (".$export;
-			$answer = mysqli_query($con,$db);
-			while($fetch = mysqli_fetch_array($answer)){
-				echo '<a class="list-group-item">';
-		        echo '<h4 class="list-group-item-heading">'.htmlspecialchars_decode($fetch[0]).'</h4>';
-		        echo '<p class="list-group-item-text">'.htmlspecialchars_decode($fetch[1]).'</p>';
-			    echo '</a>';
-			    fwrite($file,htmlspecialchars_decode($fetch[0])."\n".htmlspecialchars_decode($fetch[1])."\n");
-			}}}
-		}}
-	?>
-	</div>
-	</div>
-	
+	<div id="form-main">
+  <div id="form-div">
+    <form class="form" method="post" action="passwordChangeForm.php" onsubmit="return verify()">
+      <p class="comment">
+        <input required name="oldpass" autocomplete="off" type="password" 
+class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="Password" id="comment" />
+      </p>
+      
+      <p class="comment">
+        <input required name="newpass" autocomplete="off" type="password" 
+class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="New Password" id="comment" />
+      </p>
+
+      <p class="comment">
+        <input required name="newpassconf" autocomplete="off" type="password" 
+class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="Confirm New Password" id="comment" />
+      </p>
+      
+      <div class="submit">
+        <input type="submit" value="CHANGE PASSWORD" id="button-blue"/>
+        <div class="ease"></div>
+      </div>
+    </form>
+  </div>
+  </div>
+</div>
 </body>
 </html>
 <?php

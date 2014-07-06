@@ -11,12 +11,13 @@ if($_SESSION['isset'] == true and $flag){
 <head>
 <link rel="stylesheet" type="text/css" href="bootstrap.css">
 <link rel="stylesheet" type="text/css" href="mystyle.css">
+<title>Change Password</title>
 </head>
 <body background="">
-	
+	<div>
 	<div id="cssmenu" style="z-index:1;">
 	<ul>
-   	<li class>
+   	<li>
    		<a href="updateDbFields.php"<span>add questions</span></a>
    	</li>
    	<li>
@@ -26,7 +27,7 @@ if($_SESSION['isset'] == true and $flag){
    		<a href='logout.php'><span>logout</span></a>
    	</li>
    	<li class='last'>
-   		<a href='changePassword.php'><span>change password</span></a>
+   		<a href='changePassword.php'><span>Change password</span></a>
    	</li>
 	</ul>
 	</div>
@@ -35,7 +36,7 @@ if($_SESSION['isset'] == true and $flag){
 	<br><br>
 	<div class="col-sm-10" style="width:16%;margin-left:45%;"><br>
 		<div class="form-control">
-		<p id="time"></p>
+		<p id="time" style="color:white;">PACE</p>
 		</div>
 	</div>
 	<br>
@@ -52,40 +53,29 @@ if($_SESSION['isset'] == true and $flag){
 	</script>
 	<div class="well">
 	<div style="border-left:50px #FFFFFF;padding:50px;padding-bottom:0px;">
-	<h3>Well here are the questions :</h3>
-	<hr>
-	<div class="list-group">
+	<h3>
 	<?php
-		$type = array('single','multiple','integer');
-		$difficulty = array('easy','medium','hard');
+		$oldpass = sha1($_POST['oldpass']);
+		$newpass = sha1($_POST['newpass']);
+		$id = $_SERVER['PHP_AUTH_USER'];
 		$con = mysqli_connect($_SERVER['SERVER_ADDR'],'root','','PACE');
-		$subject = array('Physics','Chemistry','Maths');
-		foreach ($subject as $value) {
-		$db = "SELECT * FROM ".$value."Topics";
-		$res = mysqli_query($con,$db);
-		$file = fopen('QuestionPaper.txt','w');
-		while($row = mysqli_fetch_array($res)){
-			$topic = $row['Topics'];
-			$quantity=array(0,0,0,0,0,0,0,0,0);
-			for($i=0;$i<9;++$i)
-				$quantity[$i] = mysqli_real_escape_string($con,$_POST[$i.$topic]);
-			for($i=0;$i<3;++$i){
-				for($j=0;$j<3;++$j){
-					$export = "Topic=\"".$topic."\" AND QuestionType=\"".$type[$i]."\" AND Difficulty=\"".$difficulty[$j]."\") ORDER BY RAND() LIMIT ".$quantity[$i*3+$j].";";
-			$db = "SELECT Question,Answer FROM AITS WHERE (".$export;
-			$answer = mysqli_query($con,$db);
-			while($fetch = mysqli_fetch_array($answer)){
-				echo '<a class="list-group-item">';
-		        echo '<h4 class="list-group-item-heading">'.htmlspecialchars_decode($fetch[0]).'</h4>';
-		        echo '<p class="list-group-item-text">'.htmlspecialchars_decode($fetch[1]).'</p>';
-			    echo '</a>';
-			    fwrite($file,htmlspecialchars_decode($fetch[0])."\n".htmlspecialchars_decode($fetch[1])."\n");
-			}}}
-		}}
+		$db = "SELECT COUNT(*) FROM Authenticate WHERE (Id='$id' AND Pass='$oldpass')";
+		$flag = mysqli_fetch_array(mysqli_query($con,$db))[0];
+		if($flag){
+			$db = "UPDATE Authenticate SET Pass='$newpass' WHERE Id='$id'";
+			if(mysqli_query($con,$db)){
+				$_SERVER['PHP_AUTH_PW'] = sha1($newpass);
+				echo 'Password changed successfully! :D <br>Please login again.';
+			}
+			else 
+				echo 'There was some problem trying to update the password! Please try again later!<br>';
+		}
+		else
+			echo 'The entered password do not match any records! Try again!<br>';
 	?>
+	</h3>
 	</div>
-	</div>
-	
+</div>
 </body>
 </html>
 <?php

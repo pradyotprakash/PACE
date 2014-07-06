@@ -11,6 +11,7 @@ if($_SESSION['isset'] == true and $flag) {
 <head>
 <link rel="stylesheet" type="text/css" href="bootstrap.css">
 <link rel="stylesheet" type="text/css" href="mystyle.css">
+<title>Logout</title>
 </head>
 <body background="">
 	<div>
@@ -22,8 +23,11 @@ if($_SESSION['isset'] == true and $flag) {
    	<li>
    		<a href='getQuestions.php'><span>access questions</span></a>
    	</li>
-   	<li class='last active'>
+   	<li class='active'>
    		<a href='logout.php'><span>logout</span></a>
+   	</li>
+   	<li class='last'>
+   		<a href='changePassword.php'><span>change password</span></a>
    	</li>
 	</ul>
 	</div>
@@ -75,8 +79,11 @@ else {
    	<li>
    		<a href='getQuestions.php'><span>access questions</span></a>
    	</li>
-   	<li class='last active'>
+   	<li class='active'>
    		<a href='logout.php'><span>logout</span></a>
+   	</li>
+   	<li class='last'>
+   		<a href='changePassword.php'><span>change password</span></a>
    	</li>
 	</ul>
 	</div>
@@ -110,4 +117,5 @@ else {
 </html>
 <?php
 }
+mysqli_close($con);
 ?>

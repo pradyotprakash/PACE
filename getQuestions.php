@@ -28,7 +28,7 @@ table td{
 </style>
 </head>
 <body background="">
-	<div>
+	
 	<div id="cssmenu" style="z-index:1;">
 	<ul>
    	<li>
@@ -37,8 +37,11 @@ table td{
    	<li class='active'>
    		<a href='getQuestions.php'><span>access questions</span></a>
    	</li>
-   	<li class='last'>
+   	<li>
    		<a href='logout.php'><span>logout</span></a>
+   	</li>
+   	<li class='last'>
+   		<a href='changePassword.php'><span>change password</span></a>
    	</li>
 	</ul>
 	</div>
@@ -84,9 +87,9 @@ table td{
 			echo "
 				<tr>
 					<td>".$field."</td>".
-					"<td>E <input placeholder='0' name=\"0".$field."\" value='0'> M <input placeholder='0' name=\"1".$field."\" value='0'> H <input placeholder='0' name=\"2".$field."\" value='0'></td>".
-					"<td>E <input placeholder='0' name=\"3".$field."\" value='0'> M <input placeholder='0' name=\"4".$field."\" value='0'> H <input placeholder='0' name=\"5".$field."\" value='0'></td>".
-					"<td>E <input placeholder='0' name=\"6".$field."\" value='0'> M <input placeholder='0' name=\"7".$field."\" value='0'> H <input placeholder='0' name=\"8".$field."\" value='0'></td>".
+					"<td>E <input placeholder='0' name=\"0".$field."\"  > M <input placeholder='0' name=\"1".$field."\"  > H <input placeholder='0' name=\"2".$field."\"  ></td>".
+					"<td>E <input placeholder='0' name=\"3".$field."\"  > M <input placeholder='0' name=\"4".$field."\"  > H <input placeholder='0' name=\"5".$field."\"  ></td>".
+					"<td>E <input placeholder='0' name=\"6".$field."\"  > M <input placeholder='0' name=\"7".$field."\"  > H <input placeholder='0' name=\"8".$field."\"  ></td>".
 				"</tr>";
 		}
 	?>
@@ -112,9 +115,9 @@ table td{
 			echo "
 				<tr>
 					<td>".$field."</td>".
-					"<td>E <input placeholder='0' name=\"0".$field."\" value='0'> M <input placeholder='0' name=\"1".$field."\" value='0'> H <input placeholder='0' name=\"2".$field."\" value='0'></td>".
-					"<td>E <input placeholder='0' name=\"3".$field."\" value='0'> M <input placeholder='0' name=\"4".$field."\" value='0'> H <input placeholder='0' name=\"5".$field."\" value='0'></td>".
-					"<td>E <input placeholder='0' name=\"6".$field."\" value='0'> M <input placeholder='0' name=\"7".$field."\" value='0'> H <input placeholder='0' name=\"8".$field."\" value='0'></td>".
+					"<td>E <input placeholder='0' name=\"0".$field."\"  > M <input placeholder='0' name=\"1".$field."\"  > H <input placeholder='0' name=\"2".$field."\"  ></td>".
+					"<td>E <input placeholder='0' name=\"3".$field."\"  > M <input placeholder='0' name=\"4".$field."\"  > H <input placeholder='0' name=\"5".$field."\"  ></td>".
+					"<td>E <input placeholder='0' name=\"6".$field."\"  > M <input placeholder='0' name=\"7".$field."\"  > H <input placeholder='0' name=\"8".$field."\"  ></td>".
 				"</tr>";
 		}
 	?>
@@ -140,9 +143,9 @@ table td{
 			echo "
 				<tr>
 					<td>".$field."</td>".
-					"<td>E <input placeholder='0' name=\"0".$field."\" value='0'> M <input placeholder='0' name=\"1".$field."\" value='0'> H <input placeholder='0' name=\"2".$field."\" value='0'></td>".
-					"<td>E <input placeholder='0' name=\"3".$field."\" value='0'> M <input placeholder='0' name=\"4".$field."\" value='0'> H <input placeholder='0' name=\"5".$field."\" value='0'></td>".
-					"<td>E <input placeholder='0' name=\"6".$field."\" value='0'> M <input placeholder='0' name=\"7".$field."\" value='0'> H <input placeholder='0' name=\"8".$field."\" value='0'></td>".
+					"<td>E <input placeholder='0' name=\"0".$field."\"  > M <input placeholder='0' name=\"1".$field."\"  > H <input placeholder='0' name=\"2".$field."\"  ></td>".
+					"<td>E <input placeholder='0' name=\"3".$field."\"  > M <input placeholder='0' name=\"4".$field."\"  > H <input placeholder='0' name=\"5".$field."\"  ></td>".
+					"<td>E <input placeholder='0' name=\"6".$field."\"  > M <input placeholder='0' name=\"7".$field."\"  > H <input placeholder='0' name=\"8".$field."\"  ></td>".
 				"</tr>";
 		}
 	?>
@@ -152,7 +155,7 @@ table td{
         <input type="submit" class="submit-align btn btn-default" value="FETCH">
       </form>
 	</div>
-	</div>
+
 </body>
 </html>
 <?php
@@ -162,7 +165,61 @@ else
 	header("WWW-Authenticate: " .
 		"Basic realm=\"Please Authenticate\"");
 	header("HTTP/1.0 401 Unauthorized");//1.0 200 OK
-	print("Unauthorized access not allowed");
 	$_SESSION['isset']=true;
+?>
+<!DOCTYPE html>
+<head>
+<link rel="stylesheet" type="text/css" href="bootstrap.css">
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+<title>Please login</title>
+</head>
+<body background="">
+  <div>
+  <div id="cssmenu" style="z-index:1;">
+  <ul>
+    <li>
+      <a href="updateDbFields.php"<span>add questions</span></a>
+    </li>
+    <li>
+      <a href='getQuestions.php'><span>access questions</span></a>
+    </li>
+    <li>
+      <a href='logout.php'><span>logout</span></a>
+    </li>
+    <li class='last'>
+      <a href='changePassword.php'><span>change password</span></a>
+    </li>
+  </ul>
+  </div>
+
+
+  <br><br>
+  <div class="col-sm-10" style="width:16%;margin-left:45%;"><br>
+    <div class="form-control">
+    <p id="time"></p>
+    </div>
+  </div>
+  <br>
+  <br>
+  <script>
+    var x = setInterval(function(){func()},1000);
+    function func()
+    {
+      document.getElementById("time").style.color="black";
+      var d=new Date();
+      var t=d.toLocaleDateString()+" || "+d.toLocaleTimeString();
+      document.getElementById("time").innerHTML=t;
+    }
+  </script>
+  <div class="well">
+  <div style="border-left:50px #FFFFFF;padding:50px;padding-bottom:0px;">
+  <h3>Login to see the portal.</h3>
+  
+  </div>
+  </div>
+</body>
+</html>
+<?php
 }
+mysqli_close($con);
 ?>
